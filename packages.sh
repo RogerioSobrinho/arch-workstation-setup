@@ -102,8 +102,8 @@ function main() {
     init_config
     execute_step "sanitize_variables"
     execute_step "init"
-    # execute_step "packages"
-    # execute_step "systemd_units"
+    execute_step "packages"
+    execute_step "systemd_units"
     local END_TIMESTAMP=$(date -u +"%F %T")
     local INSTALLATION_TIME=$(date -u -d @$(($(date -d "$END_TIMESTAMP" '+%s') - $(date -d "$START_TIMESTAMP" '+%s'))) '+%T')
     echo -e "Installation packages start ${WHITE}$START_TIMESTAMP${NC}, end ${WHITE}$END_TIMESTAMP${NC}, time ${WHITE}$INSTALLATION_TIME${NC}"
