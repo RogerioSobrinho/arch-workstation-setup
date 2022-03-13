@@ -18,7 +18,7 @@ function set_dark_theme(){
 
 function install_gnome_environment() {
   print_step "install_gnome_environment()"
-  pacman_install 'gnome xorg gnome-terminal nautilus gnome-tweaks gnome-control-center gnome-backgrounds adwaita-icon-theme gnome-theme-extras'
+  pacman_install 'gnome xorg gnome-terminal nautilus gnome-tweaks gnome-control-center gnome-backgrounds adwaita-icon-theme gnome-themes-extra'
 }
 
 function config_power10k() {
