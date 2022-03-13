@@ -11,7 +11,7 @@ function init_config() {
 
 function set_dark_theme(){
   print_step "set_dark_theme()"
-  if [ pacman -Q | grep -q 'gnome' ]; then
+  if pacman -Q | grep -q 'gnome'; then
     execute_user "gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'"
   fi
 }
@@ -23,7 +23,7 @@ function install_gnome_environment() {
 
 function config_power10k() {
   print_step "config_power10k()"
-  if [ pacman -Q | grep -q 'zsh-theme-powerlevel10k-git' ]; then
+  if pacman -Q | grep -q 'zsh-theme-powerlevel10k-git'; then
     execute_user 'chsh -s $(which zsh)' # set zsh to default
     execute_user 'wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P /home/$USER_NAME/.fonts'
     execute_user 'wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P /home/$USER_NAME/.fonts'
@@ -31,14 +31,14 @@ function config_power10k() {
     execute_user 'wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P /home/$USER_NAME/.fonts'
     execute_user 'fc-cache -fv'
 
-    if [ pacman -Q | grep -q 'gnome-terminal' ]; then
+    if pacman -Q | grep -q 'gnome-terminal'; then
       execute_user "gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ font 'MesloLGS NF 12'"
     fi
 
-    if [ ! cat ~/.zshrc | grep "autosuggestions" ]; then 
+    if ! cat ~/.zshrc | grep "autosuggestions"; then 
       execute_user 'git clone https://github.com/zsh-users/zsh-autosuggestions /home/$USER_NAME/.zsh/zsh-autosuggestions'
     fi
-    if [ ! cat ~/.zshrc | grep "zsh-histdb" ]; then 
+    if ! cat ~/.zshrc | grep "zsh-histdb"; then 
       execute_user 'git clone https://github.com/larkery/zsh-histdb /home/$USER_NAME/.zsh/zsh-histdb'
     fi
   fi
@@ -46,7 +46,7 @@ function config_power10k() {
 
 function install_lunaVim() {
   print_step "install_lunaVim()"
-  if [ pacman -Q | grep "neovim" ]; then 
+  if pacman -Q | grep "neovim"; then 
     execute_user 'bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)'
   fi
 }
@@ -62,18 +62,18 @@ function packages() {
 
 function set_user_to_group() {
   print_step "set_user_to_group()"
-  if [ pacman -Q | grep -q 'docker' ]; then
+  if pacman -Q | grep -q 'docker'; then
     execute_sudo 'tee /etc/modules-load.d/loop.conf <<< "loop"'
     execute_sudo 'modprobe loop'
     execute_sudo 'groupadd docker'
     execute_sudo 'usermod -aG docker $USER_NAME'
   fi
 
-  if [ pacman -Q | grep -q 'flutter' ]; then
+  if pacman -Q | grep -q 'flutter'; then
     execute_sudo 'gpasswd -a $USER_NAME flutterusers'
   fi
 
-  if [ pacman -Q | grep -q 'android' ]; then 
+  if pacman -Q | grep -q 'android'; then 
     execute_sudo 'groupadd android-sdk'
     execute_sudo 'gpasswd -a $USER_NAME android-sdk'
     execute_sudo 'setfacl -R -m g:android-sdk:rwx /opt/android-sdk'
@@ -100,7 +100,7 @@ function set_config_to_nitro() {
 
 function config_optimus_to_hybrid_mode(){
   print_step "config_optimus_to_hybrid_mode()"
-  if [ pacman -Q | grep -q 'optimus' ]; then 
+  if pacman -Q | grep -q 'optimus'; then 
     execute_sudo 'cp -i ./nitro-config/80-nvidia-pm.rules /lib/udev/rules.d/80-nvidia-pm.rules'
     execute_sudo 'echo "options nvidia "NVreg_DynamicPowerManagement=0x02"" > /etc/modprobe.d/nvidia.conf'
     execute_sudo 'cp -i ./nitro-config/powertop.service /etc/systemd/system/powertop.service'
@@ -110,7 +110,7 @@ function config_optimus_to_hybrid_mode(){
 
 function config_coolerConf(){
   print_step "config_coolerConf()"
- if [ pacman -Q | grep -q 'nbfc' ]; then
+ if pacman -Q | grep -q 'nbfc'; then
     execute_sudo 'nbfc config -r'
     execute_sudo 'nbfc config -a "Acer Predator G3-572"'
   fi
