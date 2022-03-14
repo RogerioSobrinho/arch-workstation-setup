@@ -38,7 +38,6 @@ function packages_pacman() {
             execute_sudo "systemctl enable reflector.timer"
         fi
         execute_sudo 'cat <<EOF >>/etc/pacman.conf
-ParallelDownloads = 5
 [multilib]
 SigLevel = PackageRequired
 Include = /etc/pacman.d/mirrorlist
