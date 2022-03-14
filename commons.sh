@@ -24,12 +24,6 @@ function execute_step() {
     eval "$STEP"
 }
 
-function pacman_update() {
-    print_step "pacman_update()"
-    local COMMAND="pacman -Syyu --noconfirm"
-    execute_sudo "$COMMAND"
-}
-
 function pacman_install() {
     local ERROR="true"
     set +e
