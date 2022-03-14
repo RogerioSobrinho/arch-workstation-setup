@@ -37,12 +37,12 @@ function packages_pacman() {
             execute_sudo "reflector --country $REFLECTOR_COUNTRIES --latest 5 --age 24 --sort rate --completion-percent 100 --save /etc/pacman.d/mirrorlist "
             execute_sudo "systemctl enable reflector.timer"
         fi
-        cat <<EOF >/etc/pacman.conf
+        execute_sudo 'cat <<EOF >/etc/pacman.conf
 ParallelDownloads = 5
 [multilib]
 SigLevel = PackageRequired
 Include = /etc/pacman.d/mirrorlist
-EOF
+EOF'
 
         if [ -n "$PACKAGES_PACMAN" ]; then
             pacman_install "$PACKAGES_PACMAN"
