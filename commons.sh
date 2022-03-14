@@ -56,7 +56,7 @@ function aur_install() {
     for VARIABLE in {1..5}
     do
         local COMMAND="$AUR_COMMAND -Syu --noconfirm --needed ${PACKAGES[@]}"
-        execute_aur "$COMMAND"
+        execute_sudo "$COMMAND"
         if [ $? == 0 ]; then
             local ERROR="false"
             break
