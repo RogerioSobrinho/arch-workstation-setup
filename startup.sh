@@ -135,7 +135,6 @@ function end() {
 
 function main() {
   init_config
-  execute_step "pacman_update"
   execute_step "install_gnome_environment"
   execute_step "set_dark_theme"
   execute_step "packages"
