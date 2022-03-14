@@ -37,10 +37,7 @@ function packages_pacman() {
             execute_sudo "reflector --country $REFLECTOR_COUNTRIES --latest 5 --age 24 --sort rate --completion-percent 100 --save /etc/pacman.d/mirrorlist "
             execute_sudo "systemctl enable reflector.timer"
         fi
-        execute_sudo "sed -i -e 's/#[multilib]/[multilib]/g' \
-                             -e 's/#include = /etc/pacman.d/mirrorlist/include = /etc/pacman.d/mirrorlist/g' \
-                             -e 's/#ParallelDownloads = 5/ParallelDownloads = 5/g' \
-                             /etc/pacman.conf"
+        execute_sudo "sed -i -e 's/#[multilib]/[multilib]/g' -e 's/#include = /etc/pacman.d/mirrorlist/include = /etc/pacman.d/mirrorlist/g' -e 's/#ParallelDownloads = 5/ParallelDownloads = 5/g' /etc/pacman.conf"
 
         if [ -n "$PACKAGES_PACMAN" ]; then
             pacman_install "$PACKAGES_PACMAN"
