@@ -10,7 +10,7 @@ function init_config() {
 
 function sanitize_variables() {
     PACKAGES_PACMAN=$(sanitize_variable "$PACKAGES_PACMAN")
-    # PACKAGES_FLATPAK=$(sanitize_variable "$PACKAGES_FLATPAK")
+    PACKAGES_FLATPAK=$(sanitize_variable "$PACKAGES_FLATPAK")
     PACKAGES_AUR_COMMAND=$(sanitize_variable "$PACKAGES_AUR_COMMAND")
     PACKAGES_AUR=$(sanitize_variable "$PACKAGES_AUR")
     SYSTEMD_UNITS=$(sanitize_variable "$SYSTEMD_UNITS")
@@ -25,7 +25,7 @@ function packages() {
 
     packages_pacman
     packages_flatpak
-    # packages_aur
+    packages_aur
 }
 
 function packages_pacman() {
