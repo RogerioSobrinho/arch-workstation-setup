@@ -95,7 +95,7 @@ function aur_command_install() {
     pacman_install "git"
     local USER_NAME="$1"
     local COMMAND="$2"
-    execute_user "rm -rf /home/$USER_NAME/.alis/aur/$COMMAND && mkdir -p /home/$USER_NAME/.alis/aur && cd /home/$USER_NAME/.alis/aur && git clone https://aur.archlinux.org/$COMMAND.git && (cd $COMMAND && makepkg -si --noconfirm) && rm -rf /home/$USER_NAME/.alis/aur/$COMMAND"
+    execute_user "rm -rf /home/$USER_NAME/.tmp/aur/$COMMAND && mkdir -p /home/$USER_NAME/.tmp/aur && cd /home/$USER_NAME/.tmp/aur && git clone https://aur.archlinux.org/$COMMAND.git && (cd $COMMAND && makepkg -si --noconfirm) && rm -rf /home/$USER_NAME/.tmp/aur/$COMMAND"
 }
 
 function sanitize_variable() {
