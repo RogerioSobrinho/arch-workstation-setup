@@ -21,7 +21,7 @@ function init() {
 }
 
 function packages() {
-    print_step "packages()"
+    print_step 'packages()'
 
     packages_pacman
     packages_flatpak
@@ -29,13 +29,13 @@ function packages() {
 }
 
 function packages_pacman() {
-    print_step "packages_pacman()"
+    print_step 'packages_pacman()'
 
-    if [ "$PACKAGES_PACMAN_INSTALL" == "true" ]; then
-        if [ "$REFLECTOR" == "true" ]; then
-            pacman_install "reflector"
+    if [ "$PACKAGES_PACMAN_INSTALL" == 'true' ]; then
+        if [ "$REFLECTOR" == 'true' ]; then
+            pacman_install 'reflector'
             execute_sudo "reflector --country $REFLECTOR_COUNTRIES --latest 5 --sort rate --completion-percent 100 --save /etc/pacman.d/mirrorlist "
-            execute_sudo "systemctl enable reflector.timer"
+            execute_sudo 'systemctl enable reflector.timer'
         fi
         execute_sudo 'cat <<EOF >>/etc/pacman.conf
 [multilib]
@@ -50,10 +50,10 @@ EOF'
 }
 
 function packages_flatpak() {
-    print_step "packages_flatpak()"
+    print_step 'packages_flatpak()'
 
-    if [ "$PACKAGES_FLATPAK_INSTALL" == "true" ]; then
-        pacman_install "flatpak"
+    if [ "$PACKAGES_FLATPAK_INSTALL" == 'true' ]; then
+        pacman_install 'flatpak'
 
         if [ -n "$PACKAGES_FLATPAK" ]; then
             flatpak_install "$PACKAGES_FLATPAK"
@@ -62,9 +62,9 @@ function packages_flatpak() {
 }
 
 function packages_aur() {
-    print_step "packages_aur()"
+    print_step 'packages_aur()'
 
-    if [ "$PACKAGES_AUR_INSTALL" == "true" ]; then
+    if [ "$PACKAGES_AUR_INSTALL" == 'true' ]; then
         IFS=' ' local COMMANDS=($PACKAGES_AUR_COMMAND)
         aur_command_install "$USER_NAME" "$COMMANDS"
         AUR_COMMAND="${COMMANDS}"
@@ -80,13 +80,13 @@ function systemd_units() {
         local ACTION=""
         local UNIT=${U}
         if [[ $UNIT == -* ]]; then
-            local ACTION="disable"
+            local ACTION='disable'
             local UNIT=$(echo $UNIT | sed "s/^-//g")
         elif [[ $UNIT == +* ]]; then
-            local ACTION="enable"
+            local ACTION='enable'
             local UNIT=$(echo $UNIT | sed "s/^+//g")
         elif [[ $UNIT =~ ^[a-zA-Z0-9]+ ]]; then
-            local ACTION="enable"
+            local ACTION='enable'
             local UNIT=$UNIT
         fi
 
@@ -97,9 +97,9 @@ function systemd_units() {
 }
 
 function end() {
-    echo ""
+    echo ''
     echo -e "${GREEN} Arch Linux packages installed successfully"'!'"${NC}"
-    echo ""
+    echo ''
 }
 
 function main() {
