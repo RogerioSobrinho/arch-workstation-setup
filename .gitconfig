@@ -1,38 +1,65 @@
 [user]
-	name = <name>
-	email = <email>
+  name = Rogerio Sobrinho
+	email = github@rogeriosobrinho.me
 
 [core]
 	excludesfile = ~/.gitignore
-	editor = vim
+  editor = vim
+
+[init]
+  defaultBranch = main
 
 [alias]
-    	wow = log --all --graph --decorate --oneline --simplify-by-decoration
+  wow = log --all --graph --decorate --oneline --simplify-by-decoration
+  st = status
+  ci = commit
+  br = branch
+  df = diff
+  lg = log -pgit ps
+  co = checkout
+  pom = pull origin master
+  ps = push
+  pl = pull
 
 [color]
-    	ui = always
+  ui = always
+  diff = auto
+  grep = auto
+  interactive = auto
+  status = auto
+  branch = auto
+  status = auto
+
+[fetch]
+  prune = true
+
+[status]
+  short = true
 
 [color "diff"]
 	meta = yellow bold
-	commit = green bold
-    	frag = magenta bold
-    	old = red bold
-    	new = green bold
-    	whitespace = red reverse
+  commit = green bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
 
 [color "diff-highlight"]
-    	oldNormal = red bold
-    	oldHighlight = "red bold 52"
-    	newNormal = "green bold"
-    	newHighlight = "green bold 22"
+  oldNormal = red bold
+  oldHighlight = "red bold 52"
+  newNormal = "green bold"
+  newHighlight = "green bold 22"
 
 [color "branch"]
 	current = yellow reverse
-  	local = yellow
-  	remote = green
-
+  local = yellow
+  remote = green
 
 [color "status"]
-  	added = yellow
-  	changed = green
-  	untracked = cyan
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[safe]
+  directory = /opt/flutter
+
