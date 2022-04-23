@@ -1,6 +1,6 @@
 [user]
-  name = Rogerio Sobrinho
-	email = github@rogeriosobrinho.me
+  name = <name>
+  email = <email>
 
 [core]
 	excludesfile = ~/.gitignore
