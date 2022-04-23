@@ -18,8 +18,7 @@ function set_dark_theme(){
 
 function install_gnome_environment() {
   print_step 'install_gnome_environment()'
-  pacman_install 'gnome xorg gnome-terminal nautilus gnome-tweaks gnome-control-center gnome-backgrounds adwaita-icon-theme gnome-themes-extra'
-  execute_sudo 'systemctl enable gdm.service'
+  pacman_install 'gnome xorg gnome-themes-extra gnome-tweaks gnome-software-packagekit-plugin gdm-plymouth-prime plymouth'
 }
 
 function config_power10k() {
@@ -112,8 +111,7 @@ function config_optimus_to_hybrid_mode(){
 function config_coolerConf(){
   print_step 'config_coolerConf()'
  if pacman -Q | grep -q 'nbfc'; then
-    execute_sudo 'nbfc config -r'
-    execute_sudo 'nbfc config -a "Acer Predator G3-572"'
+    execute_sudo 'nbfc config --set "Acer Nitro AN715-51"'
   fi
 }
 
