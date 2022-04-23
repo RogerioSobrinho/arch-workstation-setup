@@ -5,19 +5,37 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# ZSH - PowerLevel10K
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-histdb/sqlite-history.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+autoload -Uz add-zsh-hook
+
+# ASDF
+source $HOME/.asdf/asdf.sh
+
+# Alias
 alias ls="exa -la --icons"
 alias cat="bat"
-export PATH=~/.npm-global/bin:$HOME/.npm-global/bin:$HOME/.asdf/shims:/opt/asdf-vm/bin:/usr/local/bin:/usr/bin:/var/lib/snapd/snap/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+alias history="histdb"
+alias h="histdb"
+alias grep="grep --color=auto"
+alias meminfo='free -m -l -t'
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+## Get server cpu info ##
+alias cpuinfo='lscpu'
+
+# Exports
 export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
-export CHROME_EXECUTABLE=/usr/bin/chromium
 
-
+# BindKeys
 bindkey '^?'      backward-delete-char          # bs         delete one char backward
 bindkey '^[[3~'   delete-char                   # delete     delete one char forward
 bindkey '^[[H'    beginning-of-line             # home       go to the beginning of line
