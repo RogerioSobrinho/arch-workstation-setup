@@ -4,22 +4,16 @@
 
 [core]
 	excludesfile = ~/.gitignore
-  editor = vim
+  editor = code --wait
 
 [init]
   defaultBranch = main
 
 [alias]
   wow = log --all --graph --decorate --oneline --simplify-by-decoration
-  st = status
-  ci = commit
-  br = branch
-  df = diff
-  lg = log -pgit ps
-  co = checkout
-  pom = pull origin master
-  ps = push
-  pl = pull
+  c = !git add --all && git commit -m
+  s = !git status -s
+  l = !git log --pretty=format:'%C(blue)%h%C(red)%d %C(white)%s - %C(cyan)%cn, %C(green)%cr'
 
 [color]
   ui = always
@@ -59,7 +53,4 @@
   added = yellow
   changed = green
   untracked = cyan
-
-[safe]
-  directory = /opt/flutter
 
