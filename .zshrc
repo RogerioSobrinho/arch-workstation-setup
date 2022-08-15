@@ -1,5 +1,5 @@
 # ASDF
-source $HOME/.asdf/asdf.sh
+source /opt/asdf-vm/asdf.sh
 
 # Alias
 alias ls="exa -la --icons"
