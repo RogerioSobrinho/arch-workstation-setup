@@ -34,7 +34,7 @@ function up {
 }
 
 # Alias
-alias ls="exa -la --icons"
+alias ls="exa -la --header --git --icons"
 alias cat="bat"
 alias history="histdb"
 alias h="histdb"
