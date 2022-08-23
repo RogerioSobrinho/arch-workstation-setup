@@ -16,7 +16,7 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ASDF
-source /opt/asdf-vm/asdf.sh
+source $HOME/.asdf/asdf.sh
 
 # Plugins
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -24,9 +24,13 @@ source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/zsh-histdb/sqlite-history.zsh
 autoload -Uz add-zsh-hook
 
+#donet
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+
 # Functions
 function up {
-  pacman -Syyuu --noconfirm
+  sudo pacman -Syyuu --noconfirm
   yay -Syu --noconfirm
   yay --clean --noconfirm
   flatpak update --assumeyes
@@ -48,6 +52,8 @@ alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 ## Get server cpu info ##
 alias cpuinfo='lscpu'
+alias tempStatus='sudo nbfc status -s'
+alias cpuStatus='sudo auto-cpufreq --stats'
 
 # Exports
 export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
