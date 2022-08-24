@@ -11,7 +11,7 @@ function init_config() {
 function config_mirror() {
     print_step 'config_mirror()'
     if [ "$REFLECTOR" == 'true' ]; then
-        pacman_install 'reflector'
+        pacman_install 'reflector rsync'
         execute_sudo "reflector --country $REFLECTOR_COUNTRIES --latest 5 --sort rate --completion-percent 100 --save /etc/pacman.d/mirrorlist"
     fi
 }
