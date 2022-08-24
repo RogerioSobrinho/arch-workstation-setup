@@ -14,11 +14,6 @@ function config_mirror() {
         pacman_install 'reflector'
         execute_sudo "reflector --country $REFLECTOR_COUNTRIES --latest 5 --sort rate --completion-percent 100 --save /etc/pacman.d/mirrorlist"
     fi
-    execute_sudo 'cat <<EOF >>/etc/pacman.conf
-[multilib]
-SigLevel = PackageRequired
-Include = /etc/pacman.d/mirrorlist
-EOF'
 }
 
 function packages() {
