@@ -5,18 +5,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Lines configured by zsh-newuser-install
-#HISTFILE=~/.histfile
-#HISTSIZE=1000
-#SAVEHIST=1000
-# End of lines configured by zsh-newuser-install
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ASDF
-source $HOME/.asdf/asdf.sh
+source /opt/asdf-vm/asdf.sh
 
 # Plugins
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -38,12 +33,23 @@ function up {
 }
 
 # Alias
-alias ls="exa -la --header --git --icons"
-alias cat="bat"
-alias history="histdb"
-alias h="histdb"
-alias grep="grep --color=auto"
+alias ls='exa -la --header --git --icons'
+alias cat='bat'
+alias history='histdb'
+alias h='histdb'
+alias grep='grep --color=auto'
 alias meminfo='free -m -l -t'
+alias ping='ping -c3'	# Default to 3 attemps instead of unlimited
+alias p8='ping 8.8.8.8'
+alias vi='lvim'
+alias getip='curl ifconfig.me'
+alias zz='vi ~/.zshrc && source ~/.zshrc'
+alias gh='history|grep'
+alias count='find . -type f | wc -l'
+alias cpv='rsync -ah --info=progress2'
+# Arch User
+alias listorphans='pacman -Qtdq'
+alias removeorphans="/usr/bin/pacman -Qtdq > /dev/null && sudo /usr/bin/pacman -Rs \$(/usr/bin/pacman -Qtdq | sed -e ':a;N;$!ba;s/\n/ /g')"
 ## get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4'
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'
@@ -52,6 +58,7 @@ alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 ## Get server cpu info ##
 alias cpuinfo='lscpu'
+alias files='cd /run/media/rogerio/Files'
 alias tempStatus='sudo nbfc status -s'
 alias cpuStatus='sudo auto-cpufreq --stats'
 

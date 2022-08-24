@@ -1,10 +1,10 @@
 [user]
-  name = <name>
-  email = <email>
+  name = Rogerio
+  email = github@rogeriosobrinho.me
 
 [core]
-	excludesfile = ~/.gitignore
-  editor = code --wait
+  excludesfile = ~/.gitignore
+  editor = vi
 
 [init]
   defaultBranch = main
@@ -53,4 +53,3 @@
   added = yellow
   changed = green
   untracked = cyan
-

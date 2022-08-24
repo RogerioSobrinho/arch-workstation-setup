@@ -32,17 +32,6 @@ function packages_pacman() {
     print_step 'packages_pacman()'
 
     if [ "$PACKAGES_PACMAN_INSTALL" == 'true' ]; then
-        if [ "$REFLECTOR" == 'true' ]; then
-            pacman_install 'reflector'
-            execute_sudo "reflector --country $REFLECTOR_COUNTRIES --latest 5 --sort rate --completion-percent 100 --save /etc/pacman.d/mirrorlist "
-            execute_sudo 'systemctl enable reflector.timer'
-        fi
-        execute_sudo 'cat <<EOF >>/etc/pacman.conf
-[multilib]
-SigLevel = PackageRequired
-Include = /etc/pacman.d/mirrorlist
-EOF'
-
         if [ -n "$PACKAGES_PACMAN" ]; then
             pacman_install "$PACKAGES_PACMAN"
         fi
