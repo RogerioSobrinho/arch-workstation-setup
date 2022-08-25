@@ -28,7 +28,6 @@ function packages() {
 function set_user_to_group() {
   print_step 'set_user_to_group()'
   if pacman -Q | grep -q 'docker'; then
-    execute_sudo 'groupadd docker'
     execute_sudo "usermod -aG docker $USER_NAME"
   fi
 }
@@ -53,11 +52,6 @@ function install_plugins_to_zsh() {
   execute_user "git clone https://github.com/larkery/zsh-histdb $HOME/.zsh/zsh-histdb"
 }
 
-function install_lvim() {
-  print_step 'install_lvim()'
-  execute_user 'bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)'
-}
-
 function config_laptop() {
     print_step 'config_laptop()'
     if [ "$LAPTOP" == 'Acer Nitro' ]; then
@@ -73,7 +67,6 @@ function main() {
   execute_step "install_plugins_to_zsh"
   execute_step "config_laptop"
   execute_step "set_user_to_group"
-  execute_step "install_lvim"
   do_reboot
 }
 main $@
