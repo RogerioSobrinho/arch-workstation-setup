@@ -10,8 +10,9 @@ function init_config() {
 
 function apparmor() {
   print_step 'apparmor'
-  pacman_install apparmor
+  pacman_install 'apparmor'
   execute_sudo 'systemctl enable apparmor'
+  # TODO add kernel parameter
 }
 
 function xorgRootless() {
@@ -41,7 +42,7 @@ function packages() {
 
 function nvidia() {
   print_step 'nvidia'
-  pacman_install nvidia nvidia-settings nvidia-prime
+  pacman_install 'nvidia nvidia-settings nvidia-prime'
   execute_sudo "systemctl enable nvidia-persistenced.service"
 }
 
@@ -58,14 +59,14 @@ function dotfiles() {
 
 function docker() {
   print_step 'docker()'
-  pacman_install docker docker-compose
+  pacman_install 'docker docker-compose'
   execute_sudo "systemctl enable docker.service"
   execute_sudo "usermod -aG docker $USER_NAME"
 }
 
 function install_DE() {
   print_step 'install_DE'
-  pacman_install gnome-shell gedit gnome-control-center nautilus gnome-terminal gnome-tweak-tool xdg-user-dirs gdm gnome-clocks gnome-weather gnome-calendar eog sushi gnome-boxes gnome-keyring networkmanager evince gnome-calculator gnome-system-monitor gnome-themes-extra gnome-backgrounds
+  pacman_install 'gnome-shell gedit gnome-control-center nautilus gnome-terminal gnome-tweak-tool xdg-user-dirs gdm gnome-clocks gnome-weather gnome-calendar eog sushi gnome-boxes gnome-keyring networkmanager evince gnome-calculator gnome-system-monitor gnome-themes-extra gnome-backgrounds'
   execute_sudo "systemctl enable gdm.service"
   execute_sudo "systemctl enable NetworkManager.service"
 }
@@ -78,18 +79,18 @@ function install_DE() {
 
 function bluetooth() {
   print_step 'bluetooth'
-  pacman_install bluez bluez-utils
+  pacman_install 'bluez bluez-utils'
   execute_sudo "systemctl enable bluetooth.service"
 }
 
 function openVPN() {
   print_step 'openVPN'
-  pacman_install openvpn networkmanager-openvpn
+  pacman_install 'openvpn networkmanager-openvpn'
 }
 
 function cups() {
   print_step 'cups'
-  pacman_install cups
+  pacman_install 'cups'
   execute_sudo "systemctl enable cups.service"
   execute_sudo "systemctl enable cups-browsed.service"
 }
