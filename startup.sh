@@ -124,7 +124,7 @@ function asdf() {
 function protonGE() {
   print_step 'protonGE'
   execute_user "wget https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton7-35/GE-Proton7-35.tar.gz -P /tmp"
-  execute_user 'mkdir ~/.steam/root/compatibilitytools.d'
+  execute_user 'mkdir -p ~/.steam/root/compatibilitytools.d'
   execute_user "tar -xf /tmp/GE-Proton7-35.tar.gz -C ~/.steam/root/compatibilitytools.d/"
 }
 
