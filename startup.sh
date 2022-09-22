@@ -97,6 +97,7 @@ function cups() {
 
 function zsh() {
   print_step 'zsh()'
+  pacman_install 'zsh'
   execute_user 'chsh -s $(which zsh)' # set zsh to default
   execute_user "wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P $HOME/.local/share/fonts"
   execute_user "wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P $HOME/.local/share/fonts"
