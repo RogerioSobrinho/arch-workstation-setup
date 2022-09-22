@@ -11,7 +11,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ASDF
-source /opt/asdf-vm/asdf.sh
+source $HOME/.asdf/asdf.sh
 
 # Plugins
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -43,7 +43,7 @@ alias ping='ping -c3'	# Default to 3 attemps instead of unlimited
 alias p8='ping 8.8.8.8'
 alias vi='lvim'
 alias getip='curl ifconfig.me'
-alias zz='vi ~/.zshrc && source ~/.zshrc'
+alias zz='vim ~/.zshrc && source ~/.zshrc'
 alias gh='history|grep'
 alias count='find . -type f | wc -l'
 alias cpv='rsync -ah --info=progress2'
@@ -58,9 +58,7 @@ alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 ## Get server cpu info ##
 alias cpuinfo='lscpu'
-alias files='cd /run/media/rogerio/Files'
-alias tempStatus='sudo nbfc status -s'
-alias cpuStatus='sudo auto-cpufreq --stats'
+alias files='cd /mnt/files'
 
 # Exports
 export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH

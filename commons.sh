@@ -15,10 +15,6 @@ function print_step() {
     echo ""
 }
 
-function do_reboot() {
-    reboot --reboot
-}
-
 function execute_step() {
     local STEP="$1"
     eval "$STEP"
@@ -57,6 +53,28 @@ function aur_install() {
     do
         local COMMAND="$AUR_COMMAND -Syu --noconfirm --needed ${PACKAGES[@]}"
         execute_user "$COMMAND"
+        if [ $? == 0 ]; then
+            local ERROR="false"
+            break
+        else
+            sleep 10
+        fi
+    done
+    set -e
+    if [ "$ERROR" == "true" ]; then
+        return
+    fi
+}
+
+
+function snap_install() {
+    local ERROR="true"
+    set +e
+    IFS=' ' local PACKAGES=($1)
+    for VARIABLE in {1..5}
+    do
+        local COMMAND="snap install -y ${PACKAGES[@]}"
+        execute_sudo "$COMMAND"
         if [ $? == 0 ]; then
             local ERROR="false"
             break

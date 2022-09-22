@@ -8,12 +8,26 @@ function init_config() {
     source "$PACKAGES_CONF_FILE"
 }
 
-function config_mirror() {
-    print_step 'config_mirror()'
-    if [ "$REFLECTOR" == 'true' ]; then
-        pacman_install 'reflector rsync'
-        execute_sudo "reflector --country $REFLECTOR_COUNTRIES --latest 5 --sort rate --completion-percent 100 --save /etc/pacman.d/mirrorlist"
-    fi
+function apparmor() {
+  print_step 'apparmor'
+  pacman_install apparmor
+  execute_sudo 'systemctl enable apparmor'
+}
+
+function xorgRootless() {
+  print_step 'xorgRootless'
+  execute_sudo "echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config"
+}
+
+function firewall() {
+  print_step 'firewall'
+  pacman_install ufw gufw
+  execute_sudo 'sudo ufw limit 22/tcp /
+sudo ufw allow 80/tcp /
+sudo ufw allow 443/tcp /
+sudo ufw default deny incoming /
+sudo ufw default allow outgoing /
+sudo ufw enable'
 }
 
 function packages() {
@@ -25,21 +39,63 @@ function packages() {
     fi
 }
 
-function set_user_to_group() {
-  print_step 'set_user_to_group()'
-  if pacman -Q | grep -q 'docker'; then
-    execute_sudo "usermod -aG docker $USER_NAME"
-  fi
+function nvidia() {
+  print_step 'nvidia'
+  pacman_install nvidia nvidia-settings nvidia-prime
+  execute_sudo "systemctl enable nvidia-persistenced.service"
 }
 
-function copy_dotfiles() {
-  print_step 'copy_dotfiles()'
-  execute_user "cp -i ./.gitconfig $HOME/.gitconfig"
-  execute_user "cp -i ./.zshrc $HOME/.zshrc"
+function multimonitor() {
+  print_step 'multimonitor'
+  execute_user "cp -iu ./files/monitors.xml $HOME/.config/monitors.xml"
 }
 
-function install_plugins_to_zsh() {
-  print_step 'install_plugins_to_zsh()'
+function dotfiles() {
+  print_step 'dotfiles()'
+  execute_user "cp -iu ./dotfiles/.gitconfig $HOME/.gitconfig"
+  execute_user "cp -iu ./dotfiles/.zshrc $HOME/.zshrc"
+}
+
+function docker() {
+  print_step 'docker()'
+  pacman_install docker docker-compose
+  execute_sudo "systemctl enable docker.service"
+  execute_sudo "usermod -aG docker $USER_NAME"
+}
+
+function install_DE() {
+  print_step 'install_DE'
+  pacman_install gnome-shell gedit gnome-control-center nautilus gnome-terminal gnome-tweak-tool xdg-user-dirs gdm gnome-clocks gnome-weather gnome-calendar eog sushi gnome-boxes gnome-keyring networkmanager evince gnome-calculator gnome-system-monitor gnome-themes-extra gnome-backgrounds
+  execute_sudo "systemctl enable gdm.service"
+  execute_sudo "systemctl enable NetworkManager.service"
+}
+
+# TODO
+# function extensions_DE() {
+#   print_step 'extensions_DE'
+  
+# }
+
+function bluetooth() {
+  print_step 'bluetooth'
+  pacman_install bluez bluez-utils
+  execute_sudo "systemctl enable bluetooth.service"
+}
+
+function openVPN() {
+  print_step 'openVPN'
+  pacman_install openvpn networkmanager-openvpn
+}
+
+function cups() {
+  print_step 'cups'
+  pacman_install cups
+  execute_sudo "systemctl enable cups.service"
+  execute_sudo "systemctl enable cups-browsed.service"
+}
+
+function zsh() {
+  print_step 'zsh()'
   execute_user 'chsh -s $(which zsh)' # set zsh to default
   execute_user "wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P $HOME/.local/share/fonts"
   execute_user "wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P $HOME/.local/share/fonts"
@@ -52,21 +108,49 @@ function install_plugins_to_zsh() {
   execute_user "git clone https://github.com/larkery/zsh-histdb $HOME/.zsh/zsh-histdb"
 }
 
-function config_laptop() {
-    print_step 'config_laptop()'
-    if [ "$LAPTOP" == 'Acer Nitro' ]; then
-        execute_sudo 'nbfc config --set "Acer Nitro AN515-51"'
-    fi
+function asdf() {
+  print_step 'asdf'
+  execute_user 'git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2'
+}
+
+# TODO
+# function lvim() {
+#   print_step 'lvim'
+  
+# }
+
+function protonGE() {
+  print_step 'protonGE'
+  execute_user "wget https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton7-35/GE-Proton7-35.tar.gz -P /tmp"
+  execute_user 'mkdir ~/.steam/root/compatibilitytools.d'
+  execute_user "tar -xf /tmp/GE-Proton7-35.tar.gz -C ~/.steam/root/compatibilitytools.d/"
+}
+
+function removeShortcuts() {
+  print_step 'removeShortcuts'
+  execute_sudo 'mv /usr/share/applications/display-im6.q16.desktop /usr/share/applications/display-im6.q16.desktop.bkp'
+  execute_sudo 'mv /usr/share/applications/htop.desktop /usr/share/applications/htop.desktop.bkp'
+  execute_sudo 'mv /usr/share/applications/nvim.desktop /usr/share/applications/nvim.desktop.bkp'
+  execute_sudo 'mv /usr/share/applications/vim.desktop /usr/share/applications/vim.desktop.bkp'
 }
 
 function main() {
   init_config
-  execute_step "config_mirror"
+  execute_step "apparmor"
+  execute_step "xorgRootless"
+  execute_step "firewall"
   execute_step "packages"
-  execute_step "copy_dotfiles"
-  execute_step "install_plugins_to_zsh"
-  execute_step "config_laptop"
-  execute_step "set_user_to_group"
-  do_reboot
+  execute_step "nvidia"
+  execute_step "multimonitor"
+  execute_step "dotfiles"
+  execute_step "docker"
+  execute_step "install_DE"
+  execute_step "bluetooth"
+  execute_step "openVPN"
+  execute_step "cups"
+  execute_step "zsh"
+  execute_step "asdf"
+  execute_step "protonGE"
+  execute_step "removeShortcuts"
 }
 main $@

@@ -11,6 +11,7 @@ function init_config() {
 function sanitize_variables() {
     PACKAGES_PACMAN=$(sanitize_variable "$PACKAGES_PACMAN")
     PACKAGES_FLATPAK=$(sanitize_variable "$PACKAGES_FLATPAK")
+    PACKAGES_SNAP=$(sanitize_variable "$PACKAGES_FLATPAK")
     PACKAGES_AUR_COMMAND=$(sanitize_variable "$PACKAGES_AUR_COMMAND")
     PACKAGES_AUR=$(sanitize_variable "$PACKAGES_AUR")
     SYSTEMD_UNITS=$(sanitize_variable "$SYSTEMD_UNITS")
@@ -46,6 +47,19 @@ function packages_flatpak() {
 
         if [ -n "$PACKAGES_FLATPAK" ]; then
             flatpak_install "$PACKAGES_FLATPAK"
+        fi
+    fi
+}
+
+function packages_snap() {
+    print_step 'packages_snap()'
+
+    if [ "$PACKAGES_SNAP_INSTALL" == 'true' ]; then
+        aur_command_install "$USER_NAME" 'snap'
+        execute_sudo 'systemctl enable --now snapd.socket'
+        execute_sudo 'ln -s /var/lib/snapd/snap /snap'
+        if [ -n "$PACKAGES_SNAP" ]; then
+            snap_install "$PACKAGES_SNAP"
         fi
     fi
 }
