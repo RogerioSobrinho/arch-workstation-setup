@@ -15,7 +15,7 @@ function apparmor() {
   # TODO add kernel parameter
 }
 
-function xorgRootless() {
+function xorg_rootless() {
   print_step 'xorgRootless'
   execute_sudo "echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config"
 }
@@ -134,7 +134,7 @@ function protonGE() {
   set -e
 }
 
-function removeShortcuts() {
+function remove_shortcuts() {
   print_step 'removeShortcuts'
   local APPLICATIONS_FOLDER='/usr/share/applications'
   SHORTCUTS=('avahi-discover.desktop' 'htop.desktop' /
@@ -154,7 +154,7 @@ function removeShortcuts() {
 function main() {
   init_config
   execute_step "apparmor"
-  execute_step "xorgRootless"
+  execute_step "xorg_rootless"
   execute_step "firewall"
   execute_step "packages"
   execute_step "nvidia"
@@ -168,6 +168,6 @@ function main() {
   execute_step "zsh"
   execute_step "asdf"
   execute_step "protonGE"
-  execute_step "removeShortcuts"
+  execute_step "remove_shortcuts"
 }
 main $@
