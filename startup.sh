@@ -180,7 +180,7 @@ EOF
 }
 
 function main() {
-
+  print_logo
   init_config
   execute_step "apparmor"
   execute_step "xorg_rootless"
