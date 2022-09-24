@@ -97,6 +97,7 @@ function cups() {
 
 function zsh() {
   print_step 'zsh()'
+  set +e
   pacman_install 'zsh'
   execute_user 'chsh -s $(which zsh)' # set zsh to default
   execute_user "wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P $HOME/.local/share/fonts"
@@ -108,11 +109,14 @@ function zsh() {
   execute_user "git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/zsh-autosuggestions"
   execute_user "git clone https://github.com/zsh-users/zsh-syntax-highlighting $HOME/.zsh/zsh-syntax-highlighting"
   execute_user "git clone https://github.com/larkery/zsh-histdb $HOME/.zsh/zsh-histdb"
+  set -e
 }
 
 function asdf() {
   print_step 'asdf'
+  set +e
   execute_user 'git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2'
+  set -e
 }
 
 # TODO
@@ -123,21 +127,28 @@ function asdf() {
 
 function protonGE() {
   print_step 'protonGE'
+  set +e
   execute_user "wget https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton7-35/GE-Proton7-35.tar.gz -P /tmp"
   execute_user 'mkdir -p ~/.steam/steam/compatibilitytools.d'
   execute_user "tar -xf /tmp/GE-Proton7-35.tar.gz -C ~/.steam/steam/compatibilitytools.d/"
+  set -e
 }
 
 function removeShortcuts() {
   print_step 'removeShortcuts'
-  if [ -f '/usr/share/applications/display-im6.q16.desktop' ]; then
-    execute_sudo 'mv /usr/share/applications/display-im6.q16.desktop /usr/share/applications/display-im6.q16.desktop.bkp'
-  fi
-  if [ -f '/usr/share/applications/htop.desktop' ]; then
-    execute_sudo 'mv /usr/share/applications/htop.desktop /usr/share/applications/htop.desktop.bkp'
-  fi
-  execute_sudo 'mv /usr/share/applications/nvim.desktop /usr/share/applications/nvim.desktop.bkp'
-  execute_sudo 'mv /usr/share/applications/vim.desktop /usr/share/applications/vim.desktop.bkp'
+  local APPLICATIONS_FOLDER='/usr/share/applications'
+  SHORTCUTS=('avahi-discover.desktop' 'htop.desktop' /
+  'nvim.desktop' 'vim.desktop' /
+  'qvidcap.desktop' 'qv4l2.desktop' /
+  'bssh.desktop' 'bvnc.desktop' /
+  'java-java11-openjdk.desktop' 'jconsole-java11-openjdk.desktop' /
+  'jshell-java11-openjdk.desktop' 'cmake-gui.desktop')
+  set +e
+  for shortcut in "${SHORTCUTS[@]}"
+  do
+    disable_file "$APPLICATIONS_FOLDER" "$zone"
+  done
+  set -e
 }
 
 function main() {
