@@ -1,7 +1,7 @@
 # archlinux-setup
 
 
-```bash
+```console
     _             _     
    / \   _ __ ___| |__  
   / _ \ | '__/ __| '_ \ 
@@ -31,7 +31,7 @@ For new features, improvements and bugs fill an issue in GitHub or make a pull r
 ### Run the command below to start the script:
 
 ```bash
-./startup.sh
+$ ./startup.sh
 ```
 
 ## Show your support
