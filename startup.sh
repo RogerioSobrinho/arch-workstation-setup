@@ -124,14 +124,18 @@ function asdf() {
 function protonGE() {
   print_step 'protonGE'
   execute_user "wget https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton7-35/GE-Proton7-35.tar.gz -P /tmp"
-  execute_user 'mkdir -p ~/.steam/root/compatibilitytools.d'
-  execute_user "tar -xf /tmp/GE-Proton7-35.tar.gz -C ~/.steam/root/compatibilitytools.d/"
+  execute_user 'mkdir -p ~/.steam/steam/compatibilitytools.d'
+  execute_user "tar -xf /tmp/GE-Proton7-35.tar.gz -C ~/.steam/steam/compatibilitytools.d/"
 }
 
 function removeShortcuts() {
   print_step 'removeShortcuts'
-  execute_sudo 'mv /usr/share/applications/display-im6.q16.desktop /usr/share/applications/display-im6.q16.desktop.bkp'
-  execute_sudo 'mv /usr/share/applications/htop.desktop /usr/share/applications/htop.desktop.bkp'
+  if [ -f '/usr/share/applications/display-im6.q16.desktop' ]; then
+    execute_sudo 'mv /usr/share/applications/display-im6.q16.desktop /usr/share/applications/display-im6.q16.desktop.bkp'
+  fi
+  if [ -f '/usr/share/applications/htop.desktop' ]; then
+    execute_sudo 'mv /usr/share/applications/htop.desktop /usr/share/applications/htop.desktop.bkp'
+  fi
   execute_sudo 'mv /usr/share/applications/nvim.desktop /usr/share/applications/nvim.desktop.bkp'
   execute_sudo 'mv /usr/share/applications/vim.desktop /usr/share/applications/vim.desktop.bkp'
 }
