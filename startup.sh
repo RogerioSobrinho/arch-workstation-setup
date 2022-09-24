@@ -119,11 +119,12 @@ function asdf() {
   set -e
 }
 
-# TODO
-# function lvim() {
-#   print_step 'lvim'
-  
-# }
+function lvim() {
+  print_step 'lvim'
+  set +e
+  execute_user 'bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y'
+  set -e
+}
 
 function protonGE() {
   print_step 'protonGE'
@@ -167,6 +168,7 @@ function main() {
   execute_step "cups"
   execute_step "zsh"
   execute_step "asdf"
+  execute_step "lvim"
   execute_step "protonGE"
   execute_step "remove_shortcuts"
 }
