@@ -23,12 +23,12 @@ function xorgRootless() {
 function firewall() {
   print_step 'firewall'
   pacman_install ufw gufw
-  execute_sudo 'sudo ufw limit 22/tcp /
-sudo ufw allow 80/tcp /
-sudo ufw allow 443/tcp /
-sudo ufw default deny incoming /
-sudo ufw default allow outgoing /
-sudo ufw enable'
+  execute_sudo 'ufw limit 22/tcp'
+  execute_sudo 'ufw allow 80/tcp'
+  execute_sudo 'ufw allow 443/tcp'
+  execute_sudo 'ufw default deny incoming'
+  execute_sudo 'ufw default allow outgoing'
+  execute_sudo 'ufw enable'
 }
 
 function packages() {
