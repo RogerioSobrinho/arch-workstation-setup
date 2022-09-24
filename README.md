@@ -30,28 +30,25 @@ For new features, improvements and bugs fill an issue in GitHub or make a pull r
 
 ### Step by step
 
-- Enable apparmor - [read more](https://wiki.archlinux.org/title/AppArmor)
-- Disable Xorg as Root - [read more](https://wiki.archlinux.org/title/xorg#Rootless_Xorg)
+- Enable [apparmor](https://wiki.archlinux.org/title/AppArmor)
+- Disable [Xorg as Root](https://wiki.archlinux.org/title/xorg#Rootless_Xorg)
 - Enable firewall with basic rules
 - Enable Flatpak
 - Enable Snap
 - Enable AUR
-- Install essentials apps - pacman - [read more](https://github.com/RogerioSobrinho/arch-workstation-setup/blob/master/packages.conf)
-- Install essentials apps - flatpak - [read more](https://github.com/RogerioSobrinho/arch-workstation-setup/blob/master/packages.conf)
-- Install essentials apps - snap - [read more](https://github.com/RogerioSobrinho/arch-workstation-setup/blob/master/packages.conf)
-- Install essentials apps - aur - [read more](https://github.com/RogerioSobrinho/arch-workstation-setup/blob/master/packages.conf)
+- Install essentials apps - [packages.conf](https://github.com/RogerioSobrinho/arch-workstation-setup/blob/master/packages.conf)
 - Enable Nvidia (proprietary driver)
 - Apply monitor settings
-- Git config - [read more](https://github.com/RogerioSobrinho/arch-workstation-setup/blob/master/dotfiles/.gitconfig)
+- Git config - [.gitconfig](https://github.com/RogerioSobrinho/arch-workstation-setup/blob/master/dotfiles/.gitconfig)
 - Install Docker + Docker compose
 - Install DE (Gnome)
 - Enable Bluetooth
 - Enable OpenVPN
 - Enable CUPS
-- Install ZSH with plugins (powerlevel10k, zsh-autosuggestions, zsh-syntax-highlighting, zsh-histdb)
-- Enable ASDF - [read more](https://asdf-vm.com/)
-- Enable LunarVIM - [read more](https://www.lunarvim.org/)
-- Enable ProtonGE Custom (Steam) - [read more](https://github.com/GloriousEggroll/proton-ge-custom)
+- Install ZSH with plugins ([powerlevel10k](https://github.com/romkatv/powerlevel10k), [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions), [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting), [zsh-histdb](https://github.com/larkery/zsh-histdb))
+- Enable [ASDF](https://asdf-vm.com/)
+- Enable [LunarVIM](https://www.lunarvim.org/)
+- Enable [ProtonGE Custom](https://github.com/GloriousEggroll/proton-ge-custom) (Steam) 
 - Remove unnecessary shortcuts
 
 ### Run the command below to start the script:
