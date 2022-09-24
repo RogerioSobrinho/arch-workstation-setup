@@ -12,7 +12,7 @@ function apparmor() {
   print_step 'apparmor'
   pacman_install 'apparmor'
   execute_sudo 'systemctl enable apparmor'
-  # TODO add kernel parameter
+  execute_sudo "sed -i '/^options/ s/$/ lsm=landlock,lockdown,yama,integrity,apparmor,bpf /' /boot/loader/entries/*.conf"
 }
 
 function xorg_rootless() {
