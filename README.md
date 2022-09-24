@@ -32,8 +32,7 @@ For new features, improvements and bugs fill an issue in GitHub or make a pull r
 
 - Enable apparmor - [read more](https://wiki.archlinux.org/title/AppArmor)
 - Disable Xorg as Root - [read more](https://wiki.archlinux.org/title/xorg#Rootless_Xorg)
-- Enable firewall
-- Apply firewall basic rules
+- Enable firewall with basic rules
 - Enable Flatpak
 - Enable Snap
 - Enable AUR
