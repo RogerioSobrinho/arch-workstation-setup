@@ -145,3 +145,10 @@ function execute_user() {
     bash -c "$COMMAND"
 }
 
+function disable_file() {
+    local FILEFOLDER="$1"
+    local FILENAME="$2"
+    if [ -f "$FILEFOLDER/$FILENAME" ]; then
+        execute_sudo "mv $FILEFOLDER/$FILENAME $FILEFOLDER/$FILENAME.bkp"
+    fi
+}
