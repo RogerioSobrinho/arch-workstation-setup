@@ -1,6 +1,22 @@
 # archlinux-setup
 
-It is a simple Bash script developed to Arch linux post installation on my Acer Nitro 5 1660
+
+```bash
+    _             _     
+   / \   _ __ ___| |__  
+  / _ \ | '__/ __| '_ \ 
+ / ___ \| | | (__| | | |
+/_/   \_\_|  \___|_| |_|
+
+
+__        __         _        _        _   _             
+\ \      / /__  _ __| | _____| |_ __ _| |_(_) ___  _ __  
+ \ \ /\ / / _ \| '__| |/ / __| __/ _` | __| |/ _ \| '_ \ 
+  \ V  V / (_) | |  |   <\__ \ || (_| | |_| | (_) | | | |
+   \_/\_/ \___/|_|  |_|\_\___/\__\__,_|\__|_|\___/|_| |_|
+```
+
+It is a simple Bash script developed to Arch linux post installation
 
 Currently these scripts are for me but maybe they are useful for you too.
 

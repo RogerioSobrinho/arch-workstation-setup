@@ -66,7 +66,11 @@ function docker() {
 
 function install_DE() {
   print_step 'install_DE'
-  pacman_install 'gnome-shell gedit gnome-control-center nautilus gnome-terminal gnome-tweak-tool xdg-user-dirs gdm gnome-clocks gnome-weather gnome-calendar eog sushi gnome-boxes gnome-keyring networkmanager evince gnome-calculator gnome-system-monitor gnome-themes-extra gnome-backgrounds'
+  pacman_install 'gnome-shell gedit gnome-control-center /
+  nautilus gnome-terminal gnome-tweak-tool xdg-user-dirs /
+  gdm gnome-clocks gnome-weather gnome-calendar eog sushi /
+  gnome-boxes gnome-keyring networkmanager evince gnome-calculator / 
+  gnome-system-monitor gnome-themes-extra gnome-backgrounds'
   execute_sudo "systemctl enable gdm.service"
   execute_sudo "systemctl enable NetworkManager.service"
 }
@@ -152,7 +156,27 @@ function remove_shortcuts() {
   set -e
 }
 
+function print_logo() {
+  cat <<'EOF'
+
+    _             _     
+   / \   _ __ ___| |__  
+  / _ \ | '__/ __| '_ \ 
+ / ___ \| | | (__| | | |
+/_/   \_\_|  \___|_| |_|
+
+
+__        __         _        _        _   _             
+\ \      / /__  _ __| | _____| |_ __ _| |_(_) ___  _ __  
+ \ \ /\ / / _ \| '__| |/ / __| __/ _` | __| |/ _ \| '_ \ 
+  \ V  V / (_) | |  |   <\__ \ || (_| | |_| | (_) | | | |
+   \_/\_/ \___/|_|  |_|\_\___/\__\__,_|\__|_|\___/|_| |_|
+
+EOF
+}
+
 function main() {
+
   init_config
   execute_step "apparmor"
   execute_step "xorg_rootless"
