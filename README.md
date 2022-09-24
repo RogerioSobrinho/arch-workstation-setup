@@ -30,7 +30,6 @@ For new features, improvements and bugs fill an issue in GitHub or make a pull r
 
 ### Step by step
 
-- Enable fstrim.timer
 - Enable apparmor - [read more](https://wiki.archlinux.org/title/AppArmor)
 - Disable Xorg as Root - [read more](https://wiki.archlinux.org/title/xorg#Rootless_Xorg)
 - Enable firewall
