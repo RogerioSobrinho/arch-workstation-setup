@@ -31,6 +31,12 @@ function firewall() {
   execute_sudo 'ufw enable'
 }
 
+function pacman_conf() {
+    print_step 'pacman_conf()'
+    execute_sudo "sed -i 's/#ParallelDownloads/ParallelDownloads' /etc/pacman.conf"
+    execute_sudo "sed -i '/\[multilib\]/,/Include/''s/^#//' /etc/pacman.conf"
+}
+
 function packages() {
     print_step 'packages()'
     USER_NAME="$USER_NAME" \
@@ -185,6 +191,7 @@ function main() {
   execute_step "apparmor"
   execute_step "xorg_rootless"
   execute_step "firewall"
+  execute_step "pacman_conf"
   execute_step "packages"
   execute_step "nvidia"
   execute_step "multimonitor"
