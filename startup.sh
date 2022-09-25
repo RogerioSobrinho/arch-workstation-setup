@@ -72,10 +72,10 @@ function docker() {
 
 function install_DE() {
   print_step 'install_DE'
-  pacman_install 'gnome-shell gedit gnome-control-center /
-  nautilus gnome-terminal gnome-tweak-tool xdg-user-dirs /
-  gdm gnome-clocks gnome-weather gnome-calendar eog sushi /
-  gnome-boxes gnome-keyring networkmanager evince gnome-calculator / 
+  pacman_install 'gnome-shell gedit gnome-control-center
+  nautilus gnome-terminal gnome-tweak-tool xdg-user-dirs
+  gdm gnome-clocks gnome-weather gnome-calendar eog sushi
+  gnome-boxes gnome-keyring networkmanager evince gnome-calculator 
   gnome-system-monitor gnome-themes-extra gnome-backgrounds'
   execute_sudo "systemctl enable gdm.service"
   execute_sudo "systemctl enable NetworkManager.service"
@@ -148,11 +148,11 @@ function protonGE() {
 function remove_shortcuts() {
   print_step 'removeShortcuts'
   local APPLICATIONS_FOLDER='/usr/share/applications'
-  SHORTCUTS=('avahi-discover.desktop' 'htop.desktop' /
-  'nvim.desktop' 'vim.desktop' /
-  'qvidcap.desktop' 'qv4l2.desktop' /
-  'bssh.desktop' 'bvnc.desktop' /
-  'java-java11-openjdk.desktop' 'jconsole-java11-openjdk.desktop' /
+  SHORTCUTS=('avahi-discover.desktop' 'htop.desktop'
+  'nvim.desktop' 'vim.desktop'
+  'qvidcap.desktop' 'qv4l2.desktop'
+  'bssh.desktop' 'bvnc.desktop'
+  'java-java11-openjdk.desktop' 'jconsole-java11-openjdk.desktop'
   'jshell-java11-openjdk.desktop' 'cmake-gui.desktop')
   set +e
   for shortcut in "${SHORTCUTS[@]}"
