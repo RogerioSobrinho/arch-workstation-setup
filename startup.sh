@@ -33,7 +33,7 @@ function firewall() {
 
 function pacman_conf() {
     print_step 'pacman_conf()'
-    execute_sudo "sed -i 's/#ParallelDownloads/ParallelDownloads' /etc/pacman.conf"
+    execute_sudo "sed -i '/ParallelDownloads/''s/^#//' /etc/pacman.conf"
     execute_sudo "sed -i '/\[multilib\]/,/Include/''s/^#//' /etc/pacman.conf"
 }
 
