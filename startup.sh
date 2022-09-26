@@ -54,7 +54,7 @@ function nvidia() {
 
 function multimonitor() {
   print_step 'multimonitor'
-  execute_user "cp -iu ./files/monitors.xml $HOME/.config/monitors.xml"
+  execute_user "cp -rf ./files/monitors.xml $HOME/.config/monitors.xml"
 }
 
 function dotfiles() {
@@ -157,7 +157,7 @@ function remove_shortcuts() {
   set +e
   for shortcut in "${SHORTCUTS[@]}"
   do
-    disable_file "$APPLICATIONS_FOLDER" "$zone"
+    disable_file "$APPLICATIONS_FOLDER" "$shortcut"
   done
   set -e
 }
