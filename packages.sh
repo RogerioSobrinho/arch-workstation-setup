@@ -26,6 +26,7 @@ function packages() {
 
     packages_pacman
     packages_flatpak
+    packages_snap
     packages_aur
 }
 
