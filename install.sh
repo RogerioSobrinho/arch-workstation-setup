@@ -83,7 +83,7 @@ mkfs.fat -F 32 -s 2 $ESP &>/dev/null
 
 # Creating a LUKS Container for the root partition.
 echo "Creating LUKS Container for the root partition."
-cryptsetup --type luks2 --cipher aes-xts-plain64 --hash sha256 --iter-time 2000 --key-size 256 --pbkdf argon2id --use-urandom --verify-passphrase luksFormat $cryptroot
+cryptsetup --type luks2 --cipher aes-xts-plain64 --hash sha256 --iter-time 2000 --key-size 512 --pbkdf argon2id --use-urandom --verify-passphrase luksFormat $cryptroot
 echo "Opening the newly created LUKS Container."
 cryptsetup open $cryptroot cryptroot
 EXT4="/dev/mapper/cryptroot"
@@ -247,21 +247,6 @@ arch-chroot /mnt /bin/bash -e <<-EOF
     echo "Xorg as rootless"
     echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config
 
-    cat > /boot/loader/loader.conf <<-EOF
-    default arch.conf
-    timeout 0
-    console-mode max
-    editor no
-    EOF
-
-    cat > /boot/loader/entries/arch.conf <<-EOF
-    title   Arch Linux
-    linux   /vmlinuz-linux
-    initrd  /$microcode.img
-    initrd  /initramfs-linux.img
-    options cryptdevice=/dev/disk/by-uuid/$cryptrootUUID:luks:allow-discards resume=/dev/mapper/vg0-swap root=/dev/mapper/vg0-root rw quiet splash lsm=landlock,lockdown,yama,integrity,apparmor,bpf
-    EOF
-
     # Adding user with sudo privilege
     if [ -n "$username" ]; then
         echo "Adding $username with root privilege."
@@ -271,6 +256,21 @@ arch-chroot /mnt /bin/bash -e <<-EOF
         groupadd -r audit
         gpasswd -a $username audit
     fi
+EOF
+
+cat > /mnt/boot/loader/loader.conf <<-EOF
+    default arch.conf
+    timeout 0
+    console-mode max
+    editor no
+EOF
+
+cat > /mnt/boot/loader/entries/arch.conf <<-EOF
+    title   Arch Linux
+    linux   /vmlinuz-linux
+    initrd  /$microcode.img
+    initrd  /initramfs-linux.img
+    options cryptdevice=/dev/disk/by-uuid/$cryptrootUUID:luks:allow-discards resume=/dev/mapper/vg0-swap root=/dev/mapper/vg0-root rw quiet splash lsm=landlock,lockdown,yama,integrity,apparmor,bpf
 EOF
 
 # Enable AppArmor notifications
