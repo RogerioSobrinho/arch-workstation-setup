@@ -65,6 +65,9 @@ $ bash <(curl -s https://raw.githubusercontent.com/rogeriosobrinho/arch-workstat
 ### Run the command below to start the script post install:
 
 ```bash
-$ ./startup.sh
+$ git clone https://github.com/rogeriosobrinho/arch-workstation-setup.git
+$ cd arch-workstation-setup
+$ chmod +x post_install.sh
+$ ./post_install.sh
 ```
 
