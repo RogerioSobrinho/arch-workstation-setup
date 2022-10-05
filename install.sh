@@ -91,8 +91,8 @@ EXT4="/dev/mapper/cryptroot"
 # Create encrypted partitions - Encrypted Linux (Root + Home) & Swap partitions
 pvcreate $EXT4
 vgcreate vg0 $EXT4
-lvcreate -L 120G -n root vg0
-lvcreate -L 20G -n swap vg0
+lvcreate -L 15G -n root vg0
+lvcreate -L 500M -n swap vg0
 lvcreate -l 100%FREE -n home vg0
 
 # Formatting the LUKS Container as EXT4.
