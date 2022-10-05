@@ -259,7 +259,7 @@ arch-chroot /mnt /bin/bash -e <<-EOF
     linux   /vmlinuz-linux
     initrd  /$microcode.img
     initrd  /initramfs-linux.img
-    options cryptdevice=UUID=$cryptrootUUID:luks:allow-discards resume=/dev/mapper/vg0-swap root=/dev/mapper/vg0-root rw quiet splash landlock,lockdown,yama,integrity,apparmor,bpf
+    options cryptdevice=/dev/disk/by-uuid/$cryptrootUUID:luks:allow-discards resume=/dev/mapper/vg0-swap root=/dev/mapper/vg0-root rw quiet splash lsm=landlock,lockdown,yama,integrity,apparmor,bpf
     EOF
 
     # Adding user with sudo privilege
