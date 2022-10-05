@@ -168,7 +168,7 @@ sed -i 's/nullok//g' /mnt/etc/pam.d/system-auth
 echo "* hard core 0" >> /mnt/etc/security/limits.conf
 
 # Disable su for non-wheel users
-bash -c 'cat > /mnt/etc/pam.d/su' <<'EOF'
+bash -c 'cat > /mnt/etc/pam.d/su' <<-'EOF'
 #%PAM-1.0
 auth		sufficient	pam_rootok.so
 # Uncomment the following line to implicitly trust users in the "wheel" group.
@@ -181,14 +181,14 @@ session		required	pam_unix.so
 EOF
 
 # ZRAM configuration
-bash -c 'cat > /mnt/etc/systemd/zram-generator.conf' <<'EOF'
+bash -c 'cat > /mnt/etc/systemd/zram-generator.conf' <<-'EOF'
 [zram0]
 zram-fraction = 1
 max-zram-size = 8192
 EOF
 
 # Randomize Mac Address.
-bash -c 'cat > /mnt/etc/NetworkManager/conf.d/00-macrandomize.conf' <<'EOF'
+bash -c 'cat > /mnt/etc/NetworkManager/conf.d/00-macrandomize.conf' <<-'EOF'
 [device]
 wifi.scan-rand-mac-address=yes
 [connection]
@@ -200,7 +200,7 @@ EOF
 chmod 600 /mnt/etc/NetworkManager/conf.d/00-macrandomize.conf
 
 # Disable Connectivity Check.
-bash -c 'cat > /mnt/etc/NetworkManager/conf.d/20-connectivity.conf' <<'EOF'
+bash -c 'cat > /mnt/etc/NetworkManager/conf.d/20-connectivity.conf' <<-'EOF'
 [connectivity]
 uri=http://www.archlinux.org/check_network_status.txt
 interval=0
@@ -209,7 +209,7 @@ EOF
 chmod 600 /mnt/etc/NetworkManager/conf.d/20-connectivity.conf
 
 # Enable IPv6 privacy extensions
-bash -c 'cat > /mnt/etc/NetworkManager/conf.d/ip6-privacy.conf' <<'EOF'
+bash -c 'cat > /mnt/etc/NetworkManager/conf.d/ip6-privacy.conf' <<-'EOF'
 [connection]
 ipv6.ip6-privacy=2
 EOF
@@ -217,7 +217,7 @@ EOF
 chmod 600 /mnt/etc/NetworkManager/conf.d/ip6-privacy.conf
 
 # Configuring the system.
-arch-chroot /mnt /bin/bash -e <<EOF
+arch-chroot /mnt /bin/bash -e <<-EOF
 
     # Setting up timezone.
     ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
@@ -247,14 +247,14 @@ bootctl install --path=/boot &>/dev/null
 echo "Xorg as rootless"
 echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config
 
-cat > /boot/loader/loader.conf <<EOF
+cat > /boot/loader/loader.conf <<-EOF
 default arch.conf
 timeout 0
 console-mode max
 editor no
 EOF
 
-cat > /boot/loader/entries/arch.conf <<EOF
+cat > /boot/loader/entries/arch.conf <<-EOF
 title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /$microcode.img
