@@ -144,39 +144,6 @@ echo "LANG=$locale.UTF-8" > /mnt/etc/locale.conf
 read -r -p "Please insert the keyboard layout you use: " kblayout
 echo "KEYMAP=$kblayout" > /mnt/etc/vconsole.conf
 
-# Configuring /etc/mkinitcpio.conf
-echo "Configuring /etc/mkinitcpio for LUKS hook."
-sed -i 's,MODULES=(),MODULES=(ext4),g' /mnt/etc/mkinitcpio.conf
-sed -i 's,modconf block filesystems keyboard,keyboard modconf block encrypt lvm2 resume filesystems,g' /mnt/etc/mkinitcpio.conf
-
-# Generating a new initramfs.
-echo "Creating a new initramfs."
-chmod 600 /boot/initramfs-linux* &>/dev/null
-mkinitcpio -p linux &>/dev/null
-
-# Install systemd-boot
-echo "Install systemd-boot."
-bootctl install --path=/boot &>/dev/null
-
-# Xorg as rootless
-echo "Xorg as rootless"
-echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config
-
-cat > /boot/loader/loader.conf <<EOF
-default arch.conf
-timeout 0
-console-mode max
-editor no
-EOF
-
-cat > /boot/loader/entries/arch.conf <<EOF
-title   Arch Linux
-linux   /vmlinuz-linux
-initrd  /$microcode.img
-initrd  /initramfs-linux.img
-options cryptdevice=UUID=$cryptrootUUID:luks:allow-discards resume=/dev/mapper/vg0-swap root=/dev/mapper/vg0-root rw quiet splash landlock,lockdown,yama,integrity,apparmor,bpf
-EOF
-
 # Enabling NTS
 curl https://raw.githubusercontent.com/GrapheneOS/infrastructure/main/chrony.conf >> /mnt/etc/chrony.conf
 
@@ -261,6 +228,39 @@ arch-chroot /mnt /bin/bash -e <<EOF
     # Generating locales.my keys aren't even on
     echo "Generating locales."
     locale-gen &>/dev/null
+
+    # Configuring /etc/mkinitcpio.conf
+echo "Configuring /etc/mkinitcpio for LUKS hook."
+sed -i 's,MODULES=(),MODULES=(ext4),g' /mnt/etc/mkinitcpio.conf
+sed -i 's,modconf block filesystems keyboard,keyboard modconf block encrypt lvm2 resume filesystems,g' /mnt/etc/mkinitcpio.conf
+
+# Generating a new initramfs.
+echo "Creating a new initramfs."
+chmod 600 /boot/initramfs-linux* &>/dev/null
+mkinitcpio -p linux &>/dev/null
+
+# Install systemd-boot
+echo "Install systemd-boot."
+bootctl install --path=/boot &>/dev/null
+
+# Xorg as rootless
+echo "Xorg as rootless"
+echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config
+
+cat > /boot/loader/loader.conf <<EOF
+default arch.conf
+timeout 0
+console-mode max
+editor no
+EOF
+
+cat > /boot/loader/entries/arch.conf <<EOF
+title   Arch Linux
+linux   /vmlinuz-linux
+initrd  /$microcode.img
+initrd  /initramfs-linux.img
+options cryptdevice=UUID=$cryptrootUUID:luks:allow-discards resume=/dev/mapper/vg0-swap root=/dev/mapper/vg0-root rw quiet splash landlock,lockdown,yama,integrity,apparmor,bpf
+EOF
 
     # Adding user with sudo privilege
     if [ -n "$username" ]; then
