@@ -56,7 +56,7 @@ function packages_snap() {
     print_step 'packages_snap()'
 
     if [ "$PACKAGES_SNAP_INSTALL" == 'true' ]; then
-        aur_command_install "$USER_NAME" 'snap'
+        aur_command_install "$USER_NAME" 'snapd'
         execute_sudo 'systemctl enable --now snapd.socket'
         execute_sudo 'systemctl enable --now snapd.apparmor'
         execute_sudo 'ln -s /var/lib/snapd/snap /snap'

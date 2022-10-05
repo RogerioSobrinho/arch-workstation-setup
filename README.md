@@ -26,13 +26,28 @@ It is a simple Bash script developed to Arch linux post installation
 
 Currently these scripts are for me but maybe they are useful for you too.
 
-For new features, improvements and bugs fill an issue in GitHub or make a pull request. You can test it in a virtual machine (strongly recommended) like [VirtualBox](https://www.virtualbox.org/) before run it in real hardware.
+You can test it in a virtual machine (strongly recommended) like [VirtualBox](https://www.virtualbox.org/) before run it in real hardware.
 
 ### Step by step
+#### Install
+This is my fork of [Arch-Setup-Script](https://github.com/tommytran732/Arch-Setup-Script)
 
-- Enable [apparmor](https://wiki.archlinux.org/title/AppArmor)
-- Disable [Xorg as Root](https://wiki.archlinux.org/title/xorg#Rootless_Xorg)
-- Enable firewall with basic rules
+Changes to the original project:
+
+- EXT4
+- SWAP
+- Xorge as Rootless
+- Luks2
+
+### Run the command below to start the script install:
+
+##### Obs: Check script before run
+
+```bash
+$ bash <(curl -s https://raw.githubusercontent.com/rogeriosobrinho/arch-workstation-setup/master/install.sh)
+```
+
+#### Post Install
 - Enable Flatpak
 - Enable Snap
 - Enable AUR
@@ -41,22 +56,15 @@ For new features, improvements and bugs fill an issue in GitHub or make a pull r
 - Apply monitor settings
 - Git config - [.gitconfig](https://github.com/RogerioSobrinho/arch-workstation-setup/blob/master/dotfiles/.gitconfig)
 - Install Docker + Docker compose
-- Install DE (Gnome)
 - Enable Bluetooth
 - Enable OpenVPN
 - Enable CUPS
-- Install ZSH with plugins ([powerlevel10k](https://github.com/romkatv/powerlevel10k), [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions), [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting), [zsh-histdb](https://github.com/larkery/zsh-histdb))
 - Enable [ASDF](https://asdf-vm.com/)
-- Enable [LunarVIM](https://www.lunarvim.org/)
-- Enable [ProtonGE Custom](https://github.com/GloriousEggroll/proton-ge-custom) (Steam) 
 - Remove unnecessary shortcuts
 
-### Run the command below to start the script:
+### Run the command below to start the script post install:
 
 ```bash
 $ ./startup.sh
 ```
 
-## Show your support
-
-Give a ⭐️ if this project helped you!

@@ -71,7 +71,6 @@ parted -s "$DISK" \
 sleep 0.1
 ESP="/dev/$(lsblk $DISK -o NAME,PARTLABEL | grep ESP| cut -d " " -f1 | cut -c7-)"
 cryptroot="/dev/$(lsblk $DISK -o NAME,PARTLABEL | grep cryptroot | cut -d " " -f1 | cut -c7-)"
-cryptrootUUID=$(blkid -s UUID -o value $cryptroot)
 
 # Informing the Kernel of the changes.
 echo "Informing the Kernel about the disk changes."
@@ -112,7 +111,6 @@ swapon /dev/mapper/vg0-swap
 kernel_selector
 
 # Pacstrap (setting up a base sytem onto the new root).
-# As I said above, I am considering replacing gnome-software with pamac-flatpak-gnome as PackageKit seems very buggy on Arch Linux right now.
 echo "Installing the base system (it may take a while)."
 pacstrap /mnt base base-devel ${kernel} ${microcode} linux-firmware ${kernel}-headers lvm2 inetutils net-tools sudo networkmanager networkmanager-openvpn apparmor git python-psutil python-notify2 vim gdm gnome-control-center gnome-terminal gnome-clocks xdg-user-dirs gnome-calendar eog sushi gnome-boxes evince gnome-calculator  gnome-system-monitor gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator ttf-caladea ttf-carlito ttf-dejavu ttf-liberation ttf-linux-libertine-g noto-fonts adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts ttf-jetbrains-mono gnu-free-fonts reflector mlocate man-db chrony bluez bluez-utils openvpn
 
@@ -270,7 +268,7 @@ cat > /mnt/boot/loader/entries/arch.conf <<-EOF
     linux   /vmlinuz-linux
     initrd  /$microcode.img
     initrd  /initramfs-linux.img
-    options cryptdevice=/dev/disk/by-uuid/$cryptrootUUID:luks:allow-discards resume=/dev/mapper/vg0-swap root=/dev/mapper/vg0-root rw quiet splash lsm=landlock,lockdown,yama,integrity,apparmor,bpf
+    options cryptdevice=$cryptroot:luks:allow-discards resume=/dev/mapper/vg0-swap root=/dev/mapper/vg0-root rw quiet splash lsm=landlock,lockdown,yama,integrity,apparmor,bpf
 EOF
 
 # Enable AppArmor notifications
