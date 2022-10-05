@@ -88,7 +88,6 @@ echo "Opening the newly created LUKS Container."
 cryptsetup open $cryptroot cryptroot
 EXT4="/dev/mapper/cryptroot"
 
-
 # Create encrypted partitions - Encrypted Linux (Root + Home) & Swap partitions
 pvcreate $EXT4
 vgcreate vg0 $EXT4
@@ -115,7 +114,7 @@ kernel_selector
 # Pacstrap (setting up a base sytem onto the new root).
 # As I said above, I am considering replacing gnome-software with pamac-flatpak-gnome as PackageKit seems very buggy on Arch Linux right now.
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel ${kernel} ${microcode} linux-firmware linux-headers lvm2 sudo networkmanager networkmanager-openvpn apparmor git python-psutil python-notify2 vim gdm gnome-control-center gnome-terminal gnome-clocks xdg-user-dirs gnome-calendar eog sushi gnome-boxes evince gnome-calculator  gnome-system-monitor gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts reflector mlocate man-db chrony bluez bluez-utils openvpn
+pacstrap /mnt base base-devel ${kernel} ${microcode} linux-firmware ${kernel}-headers lvm2 sudo networkmanager networkmanager-openvpn apparmor git python-psutil python-notify2 vim gdm gnome-control-center gnome-terminal gnome-clocks xdg-user-dirs gnome-calendar eog sushi gnome-boxes evince gnome-calculator  gnome-system-monitor gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts reflector mlocate man-db chrony bluez bluez-utils openvpn
 
 # Generating /etc/fstab.
 echo "Generating a new fstab."
@@ -150,6 +149,18 @@ echo "Configuring /etc/mkinitcpio for LUKS hook."
 sed -i 's,MODULES=(),MODULES=(ext4),g' /mnt/etc/mkinitcpio.conf
 sed -i 's,modconf block filesystems keyboard,keyboard modconf block encrypt lvm2 resume filesystems,g' /mnt/etc/mkinitcpio.conf
 
+# Generating a new initramfs.
+echo "Creating a new initramfs."
+chmod 600 /boot/initramfs-linux* &>/dev/null
+mkinitcpio -p linux &>/dev/null
+
+# Install systemd-boot
+echo "Install systemd-boot."
+bootctl install --path=/boot &>/dev/null
+
+# Xorg as rootless
+echo "Xorg as rootless"
+echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config
 
 cat > /boot/loader/loader.conf <<EOF
 default arch.conf
@@ -251,18 +262,6 @@ arch-chroot /mnt /bin/bash -e <<EOF
     echo "Generating locales."
     locale-gen &>/dev/null
 
-    # Generating a new initramfs.
-    echo "Creating a new initramfs."
-    chmod 600 /boot/initramfs-linux* &>/dev/null
-    mkinitcpio -p linux &>/dev/null
-    
-    # Install systemd-boot
-    echo "Install systemd-boot."
-    bootctl install --path=/boot &>/dev/null
-
-    # Xorg as rootless
-    echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config
-
     # Adding user with sudo privilege
     if [ -n "$username" ]; then
         echo "Adding $username with root privilege."
@@ -292,8 +291,6 @@ arch-chroot /mnt chown -R $username:$username /home/${username}/.config
 
 
 # Setting user password.
-
-
 [ -n "$username" ] && echo "Setting user password for ${username}." && arch-chroot /mnt /bin/passwd "$username"
 
 # Giving wheel user sudo access.
@@ -339,12 +336,6 @@ systemctl disable systemd-timesyncd --root=/mnt &>/dev/null
 
 # Enabling chronyd
 systemctl enable chronyd --root=/mnt &>/dev/null
-
-# Enabling Snapper automatic snapshots.
-# echo "Enabling Snapper and automatic snapshots entries."
-# systemctl enable snapper-timeline.timer --root=/mnt &>/dev/null
-# systemctl enable snapper-cleanup.timer --root=/mnt &>/dev/null
-# systemctl enable grub-btrfs.path --root=/mnt &>/dev/null
 
 # Setting umask to 077.
 sed -i 's/022/077/g' /mnt/etc/profile
