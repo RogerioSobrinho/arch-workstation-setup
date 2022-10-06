@@ -30,7 +30,7 @@ function packages() {
 
 function nvidia() {
   print_step 'nvidia'
-  pacman_install 'nvidia nvidia-settings nvidia-prime'
+  pacman_install 'nvidia nvidia-settings nvidia-prime lib32-nvidia-utils'
   execute_sudo "systemctl enable nvidia-persistenced.service"
 }
 
