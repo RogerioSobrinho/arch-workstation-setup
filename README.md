@@ -36,6 +36,7 @@ Changes to the original project:
 
 - EXT4
 - SWAP
+- Systemd-boot
 - Xorge as Rootless
 - Luks2
 
