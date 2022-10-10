@@ -112,7 +112,7 @@ kernel_selector
 
 # Pacstrap (setting up a base sytem onto the new root).
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel ${kernel} ${microcode} linux-firmware ${kernel}-headers lvm2 inetutils net-tools sudo networkmanager networkmanager-openvpn apparmor git python-psutil python-notify2 vim gdm gnome-control-center gnome-terminal gnome-clocks xdg-user-dirs gnome-calendar eog sushi gnome-boxes evince gnome-calculator  gnome-system-monitor gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator ttf-caladea ttf-carlito ttf-dejavu ttf-liberation ttf-linux-libertine-g noto-fonts adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts ttf-jetbrains-mono gnu-free-fonts reflector mlocate man-db chrony bluez bluez-utils openvpn
+pacstrap /mnt base base-devel ${kernel} ${microcode} linux-firmware ${kernel}-headers lvm2 inetutils net-tools sudo networkmanager networkmanager-openvpn apparmor git python-psutil python-notify2 vim gdm power-profiles-daemon gnome-control-center gnome-terminal gnome-clocks xdg-user-dirs gnome-calendar eog sushi gnome-boxes evince gnome-calculator  gnome-system-monitor gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator ttf-caladea ttf-carlito ttf-dejavu ttf-liberation ttf-linux-libertine-g noto-fonts adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts ttf-jetbrains-mono gnu-free-fonts reflector mlocate man-db chrony bluez bluez-utils openvpn
 
 # Generating /etc/fstab.
 echo "Generating a new fstab."
